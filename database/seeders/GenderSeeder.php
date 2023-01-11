@@ -7,25 +7,18 @@ use Illuminate\Database\Seeder;
 
 class GenderSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        $this->addGender("Male");
-        $this->addGender("Female");
+        $this->addGenero(Gender::MALE, "Male");
+        $this->addGenero(Gender::FEMALE, "Female");
     }
-
-    private function addGender($title)
-    {
-        $type = Gender::where('title', $title)->first();
-
-        if (!$type) {
-            $type = new Gender();
-            $type->title = $title;
-            $type->save();
+    
+    private function addGenero($id, $title){
+        $e = Gender::where('id', $id)->first();
+        if(!$e){
+           $e = new Gender();
         }
+        $e->title = $title;
+        $e->save(); 
     }
 }

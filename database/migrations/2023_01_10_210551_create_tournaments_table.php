@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->foreignId('gender_id')->constrained('genders');
-            $table->foreignId('player_id')->constrained('players')->nullable(true);
+            $table->foreignId('player_id')->nullable(true)->constrained('players');
             $table->timestamps();
             $table->softDeletes();
         });
