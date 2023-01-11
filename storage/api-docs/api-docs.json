@@ -1,10 +1,10 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "L5 OpenApi",
-        "description": "L5 Swagger OpenApi description",
+        "title": "GeoTest Swagger",
+        "description": "L5 Swagger for Geo Pagos challenge",
         "contact": {
-            "email": "darius@matulionis.lt"
+            "email": "maxibertran@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -16,14 +16,350 @@
         }
     },
     "paths": {
-        "/": {
-            "get": {
-                "description": "Home page",
+        "/api/user/register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Register",
+                "description": "Register a new user",
+                "operationId": "23a5a539168424f6bcf1d0ed3ef41c30",
+                "requestBody": {
+                    "description": "Register new user",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "example"
+                                    },
+                                    "email": {
+                                        "type": "email",
+                                        "format": "email",
+                                        "example": "example@test.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "holamundo"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "holamundo"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "default": {
-                        "description": "Welcome page"
+                    "200": {
+                        "description": "Success"
+                    },
+                    "422": {
+                        "description": "Incorrect data in body"
                     }
                 }
+            }
+        },
+        "/api/user/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login",
+                "description": "Login by username and password",
+                "operationId": "85d36953ec9e3353402bc35c8b94df7e",
+                "requestBody": {
+                    "description": "Login with user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "example"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "holamundo"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/user/user-profile": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User Profile",
+                "description": "Get user profile",
+                "operationId": "0aefe46954ae9c6bfe53031084ad84b2",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/logout": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logout",
+                "description": "Close user session",
+                "operationId": "50eebe8f1798625f8d690e36d8b5960a",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/player": {
+            "get": {
+                "tags": [
+                    "Player"
+                ],
+                "summary": "Players",
+                "description": "Get a list of players. ",
+                "operationId": "f7d9d453b097b07f226643556466c399",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/player/show/{id}": {
+            "get": {
+                "tags": [
+                    "Player"
+                ],
+                "summary": "Get Player",
+                "description": "Get player detail",
+                "operationId": "a97cd3f83ea08398f0ca56e95ee9f032",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Find player by ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/tournament": {
+            "get": {
+                "tags": [
+                    "Tournament"
+                ],
+                "summary": "Tournaments",
+                "description": "Get a list of tournaments. ",
+                "operationId": "547b5d92dd19bfe632b6d2bc83862d16",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/tournament/store": {
+            "post": {
+                "tags": [
+                    "Tournament"
+                ],
+                "summary": "Create tournament",
+                "description": "Register and play a new tournament",
+                "operationId": "e508ea4e989bbed65c3dbd6297df7937",
+                "requestBody": {
+                    "description": "Register and play a new tournament. IMPORTANT ability min 0 max 100| streng-speed-reaction min 1 max 10 | gender_id need values 1=Male 2=Female | all players and tournament needs to be a same gender_id | the number of players needs to be a power of 2",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "gender_id",
+                                    "players"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Grand Slime"
+                                    },
+                                    "gender_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "players": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Pepe"
+                                                },
+                                                "credential_code": {
+                                                    "type": "string",
+                                                    "example": "pp25"
+                                                },
+                                                "gender_id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "ability": {
+                                                    "type": "integer",
+                                                    "example": "50"
+                                                },
+                                                "streng": {
+                                                    "type": "integer",
+                                                    "example": "3"
+                                                },
+                                                "speed": {
+                                                    "type": "integer",
+                                                    "example": "3"
+                                                },
+                                                "reaction": {
+                                                    "type": "integer",
+                                                    "example": "6"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "422": {
+                        "description": "Incorrect data in body"
+                    }
+                }
+            }
+        },
+        "/api/tournament/show/{id}": {
+            "get": {
+                "tags": [
+                    "Tournament"
+                ],
+                "summary": "Get Tournament",
+                "description": "Get tournament detail",
+                "operationId": "aa8c110627c93c1c592d31b5f490f0c1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Find by ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "scheme": "bearer"
             }
         }
     }

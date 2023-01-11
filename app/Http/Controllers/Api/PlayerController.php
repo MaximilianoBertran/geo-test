@@ -10,10 +10,23 @@ use App\Traits\ApiResponser;
 class PlayerController extends Controller
 {
     use ApiResponser;
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     * security={{"bearerAuth":{}}},
+     * path="/api/player",
+     * summary="Players",
+     * description="Get a list of players. ",
+     * tags={"Player"},
+     * @OA\Response(
+     *    response=200,
+     *    description="Success"
+     * ),
+     * @OA\Response(
+     *    response=401,
+     *    description="Unauthenticated"
+     * )
+     * )
      */
     public function index()
     {
@@ -22,10 +35,27 @@ class PlayerController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     * security={{"bearerAuth":{}}},
+     * path="/api/player/show/{id}",
+     * summary="Get Player",
+     * description="Get player detail",
+     * tags={"Player"},
+     * @OA\Parameter(
+     *  name="id",
+     *  in="path",
+     *  description="Find player by ID",
+     *  required=true,
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Success"
+     * ),
+     * @OA\Response(
+     *    response=401,
+     *    description="Unauthenticated"
+     * )
+     * )
      */
     public function show($id)
     {

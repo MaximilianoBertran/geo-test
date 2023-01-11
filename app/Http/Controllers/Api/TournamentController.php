@@ -14,10 +14,23 @@ use App\Traits\ApiResponser;
 class TournamentController extends Controller
 {
     use ApiResponser;
+    
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     * security={{"bearerAuth":{}}},
+     * path="/api/tournament",
+     * summary="Tournaments",
+     * description="Get a list of tournaments. ",
+     * tags={"Tournament"},
+     * @OA\Response(
+     *    response=200,
+     *    description="Success"
+     * ),
+     * @OA\Response(
+     *    response=401,
+     *    description="Unauthenticated"
+     * )
+     * )
      */
     public function index($gender_id = null)
     {
@@ -34,10 +47,40 @@ class TournamentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @OA\Post(
+     * path="/api/tournament/store",
+     * summary="Create tournament",
+     * description="Register and play a new tournament",
+     * tags={"Tournament"},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Register and play a new tournament. IMPORTANT ability min 0 max 100| streng-speed-reaction min 1 max 10 | gender_id need values 1=Male 2=Female | all players and tournament needs to be a same gender_id | the number of players needs to be a power of 2",
+     *    @OA\JsonContent(
+     *       required={"title","gender_id","players"},
+     *       @OA\Property(property="title", type="string", example="Grand Slime"),
+     *       @OA\Property(property="gender_id", type="integer", example="1"),
+     *       @OA\Property(property="players", type="array",
+     *          @OA\Items(
+     *              @OA\Property(property="name", type="string", example="Pepe"),
+     *              @OA\Property(property="credential_code", type="string", example="pp25"),
+     *              @OA\Property(property="gender_id", type="integer", example="1"),
+     *              @OA\Property(property="ability", type="integer", example="50"),
+     *              @OA\Property(property="streng", type="integer", example="3"),
+     *              @OA\Property(property="speed", type="integer", example="3"),
+     *              @OA\Property(property="reaction", type="integer", example="6"),
+     *          ),
+     *       )
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Success"
+     * ),
+     * @OA\Response(
+     *    response=422,
+     *    description="Incorrect data in body"
+     * )
+     * )
      */
     public function store(TournamentRequest $request)
     {
@@ -63,10 +106,27 @@ class TournamentController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     * security={{"bearerAuth":{}}},
+     * path="/api/tournament/show/{id}",
+     * summary="Get Tournament",
+     * description="Get tournament detail",
+     * tags={"Tournament"},
+     * @OA\Parameter(
+     *  name="id",
+     *  in="path",
+     *  description="Find by ID",
+     *  required=true,
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Success"
+     * ),
+     * @OA\Response(
+     *    response=401,
+     *    description="Unauthenticated"
+     * )
+     * )
      */
     public function show($id)
     {

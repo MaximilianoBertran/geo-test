@@ -16,8 +16,31 @@ class AuthController extends Controller
     use ApiResponser;
 
     /**
-     * Create an instance of User.
-     * @return Illuminate\Http\Response
+     * @OA\Post(
+     * path="/api/user/register",
+     * summary="Register",
+     * description="Register a new user",
+     * tags={"User"},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Register new user",
+     *    @OA\JsonContent(
+     *       required={"username","email","password","password_confirmation"},
+     *       @OA\Property(property="username", type="string", format="string", example="example"),
+     *       @OA\Property(property="email", type="email", format="email", example="example@test.com"),
+     *       @OA\Property(property="password", type="string", format="password", example="holamundo"),
+     *       @OA\Property(property="password_confirmation", type="string", format="password", example="holamundo")
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Success"
+     * ),
+     * @OA\Response(
+     *    response=422,
+     *    description="Incorrect data in body"
+     * )
+     * )
      */
     public function register(StoreUserRequest $request)
     {
@@ -30,6 +53,31 @@ class AuthController extends Controller
         return $this->successResponse(['data' => $user, 'access_token' => $token, 'token_type' => 'Bearer'], Response::HTTP_CREATED);
     }
 
+    /**
+     * @OA\Post(
+     * path="/api/user/login",
+     * summary="Login",
+     * description="Login by username and password",
+     * tags={"User"},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Login with user credentials",
+     *    @OA\JsonContent(
+     *       required={"username","password"},
+     *       @OA\Property(property="username", type="string", format="string", example="example"),
+     *       @OA\Property(property="password", type="string", format="password", example="holamundo"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Success"
+     * ),
+     * @OA\Response(
+     *    response=401,
+     *    description="Invalid credentials"
+     * )
+     * )
+     */
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -46,11 +94,45 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     * security={{"bearerAuth":{}}},
+     * path="/api/user/user-profile",
+     * summary="User Profile",
+     * description="Get user profile",
+     * tags={"User"},
+     * @OA\Response(
+     *    response=200,
+     *    description="Success"
+     * ),
+     * @OA\Response(
+     *    response=401,
+     *    description="Unauthenticated"
+     * )
+     * )
+     */
     public function userProfile(Request $request)
     {
         return $this->successResponse(['data' => auth()->user()]);
     }
 
+    /**
+     * @OA\Post(
+     * security={{"bearerAuth":{}}},
+     * path="/api/user/logout",
+     * summary="Logout",
+     * description="Close user session",
+     * tags={"User"},
+     * @OA\Response(
+     *    response=200,
+     *    description="Success"
+     * ),
+     * @OA\Response(
+     *    response=401,
+     *    description="Unauthenticated"
+     * )
+     * )
+     */
     public function logout()
     {
         auth()->user()->tokens()->delete();

@@ -15,23 +15,24 @@ use Illuminate\Routing\Controller as BaseController;
  *              "url": "https://via.placeholder.com/190x90.png?text=L5-Swagger"
  *          }
  *      },
- *      title="L5 OpenApi",
- *      description="L5 Swagger OpenApi description",
+ *      title="GeoTest Swagger",
+ *      description="L5 Swagger for Geo Pagos challenge",
  *      @OA\Contact(
- *          email="darius@matulionis.lt"
+ *          email="maxibertran@gmail.com"
  *      ),
  *     @OA\License(
  *         name="Apache 2.0",
  *         url="https://www.apache.org/licenses/LICENSE-2.0.html"
  *     )
  * )
- * @OA\Get(
- *     path="/",
- *     description="Home page",
- *     @OA\Response(response="default", description="Welcome page")
- * )
+ * @OA\SecurityScheme(
+ *    securityScheme="bearerAuth",
+ *    in="header",
+ *    name="bearerAuth",
+ *    type="http",
+ *    scheme="bearer",
+ * ),
  */
-
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
