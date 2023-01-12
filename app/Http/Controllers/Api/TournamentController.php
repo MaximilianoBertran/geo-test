@@ -38,7 +38,7 @@ class TournamentController extends Controller
             $tournaments = TournamentResource::collection(Tournament::all());
         } else {
             if( $gender_id == Gender::MALE or $gender_id == Gender::FEMALE ) {
-                $tournaments = TournamentResource::collection(Tournament::where('gender_id', $gender_id));
+                $tournaments = TournamentResource::collection(Tournament::where('gender_id', $gender_id)->get());
             } else {
                 return $this->errorResponse("{$gender_id} is a invalid gender", Response::HTTP_BAD_REQUEST);
             }
